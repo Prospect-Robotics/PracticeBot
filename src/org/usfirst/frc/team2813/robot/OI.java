@@ -1,10 +1,10 @@
 package org.usfirst.frc.team2813.robot;
 
-import org.usfirst.frc.team2813.robot.commands.Clockwise;
-import org.usfirst.frc.team2813.robot.commands.Counterclockwise;
+import org.usfirst.frc.team2813.robot.commands.ResetGyro;
+import org.usfirst.frc.team2813.robot.commands.RunMotor;
+import org.usfirst.frc.team2813.robot.commands.SetServo;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
@@ -40,11 +40,42 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	public final Joystick joystick = new Joystick(0);
-	Button button1 = new JoystickButton(joystick, 1);
-	Button button2 = new JoystickButton(joystick, 2);
-	
+	public final Joystick buttons = new Joystick(1);
+	// JoystickButton button1 = new JoystickButton(joystick, 1);
+	// JoystickButton button2 = new JoystickButton(joystick, 2);
+	// JoystickButton button3 = new JoystickButton(joystick, 3);
+	// JoystickButton button4 = new JoystickButton(joystick, 4);
+	// JoystickButton button7 = new JoystickButton(joystick, 5);
+	// JoystickButton button8 = new JoystickButton(joystick, 6);
+	// JoystickButton button12 = new JoystickButton(joystick, 10);
+	JoystickButton button1 = new JoystickButton(buttons, 1);
+	JoystickButton button2 = new JoystickButton(buttons, 5);
+	JoystickButton button3 = new JoystickButton(buttons, 2);
+	JoystickButton button4 = new JoystickButton(buttons, 6);
+	JoystickButton button5 = new JoystickButton(buttons, 3);
+	JoystickButton button6 = new JoystickButton(buttons, 7);
+	JoystickButton button7 = new JoystickButton(buttons, 4);
+	JoystickButton button8 = new JoystickButton(buttons, 8);
+	JoystickButton button9 = new JoystickButton(buttons, 9);
+	JoystickButton button10 = new JoystickButton(buttons, 10);
+	JoystickButton button11 = new JoystickButton(buttons, 11);
+	JoystickButton button12 = new JoystickButton(buttons, 12);
+
 	public OI() {
-		button1.whenPressed(new Clockwise());
-		button2.whenPressed(new Counterclockwise());
+		button1.toggleWhenPressed(new RunMotor(Robot.intake, -1.0));
+		button2.toggleWhenPressed(new RunMotor(Robot.intake, 1.0));
+		button3.toggleWhenPressed(new RunMotor(Robot.belt, 0.6));
+		button4.toggleWhenPressed(new RunMotor(Robot.belt, -0.6));
+		button5.whenPressed(new RunMotor(Robot.intake, -1.0));
+		button5.whenPressed(new RunMotor(Robot.belt, 0.6));
+		button6.whenPressed(new RunMotor(Robot.intake, 1.0));
+		button6.whenPressed(new RunMotor(Robot.belt, -0.6));
+		button7.toggleWhenPressed(new RunMotor(Robot.lift, 0.5));
+		button8.toggleWhenPressed(new RunMotor(Robot.lift, -0.5));
+		button11.whenPressed(new RunMotor(Robot.intake, 0.0));
+		button11.whenPressed(new RunMotor(Robot.belt, 0.0));
+		button9.whenPressed(new SetServo(Robot.servo, 0));
+		button10.whenPressed(new SetServo(Robot.servo, 100));
+		button12.whenPressed(new ResetGyro());
 	}
 }

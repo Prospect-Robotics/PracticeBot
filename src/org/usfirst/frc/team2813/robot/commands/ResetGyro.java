@@ -4,10 +4,10 @@ import org.usfirst.frc.team2813.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Counterclockwise extends Command {
-	public Counterclockwise() {
+public class ResetGyro extends Command {
+	public ResetGyro() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.intake);
+		requires(Robot.driveTrain);
 	}
 
 	// Called just before this Command runs the first time
@@ -16,6 +16,7 @@ public class Counterclockwise extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		Robot.driveTrain.operatorDrive.gyro.reset();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -25,12 +26,6 @@ public class Counterclockwise extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		if (Robot.intake.toggle == -1)
-			Robot.intake.toggle = 0;
-		else
-			Robot.intake.toggle = -1;
-		Robot.intake.intake.set(Robot.intake.toggle);
-		Robot.intake.belt.set(-Robot.intake.toggle);
 	}
 
 	// Called when another command which requires one or more of the same

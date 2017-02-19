@@ -10,6 +10,7 @@ public class OperatorDrive extends Command {
 	ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	double deadZone = 0.275;
 	double scale = 1;
+	int time = 0;
 
 	public OperatorDrive() {
 		// Use requires() here to declare subsystem dependencies
@@ -22,19 +23,46 @@ public class OperatorDrive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double joystickTwist = Robot.oi.joystick.getRawAxis(4);
-		double getTwist = Math
-				.pow(((Math.abs(joystickTwist) + deadZone / (1 - deadZone)) / (1 + deadZone / (1 - deadZone))), 3);
-		if (joystickTwist < 0 && 0 < getTwist) {
-			getTwist *= -1;
-		}
-		
 		if (Math.IEEEremainder(Robot.oi.joystick.getDirectionDegrees() - gyro.getAngle(), 180) > 10) {
 			scale = 1;
 		}
-		
-		Robot.driveTrain.drive.mecanumDrive_Cartesian(Robot.oi.joystick.getX() * scale,
-				Robot.oi.joystick.getY() * scale, getTwist, gyro.getAngle());
+
+		double getTwist = Math.pow(((Math.abs(Robot.oi.joystick.getRawAxis(4)) + deadZone / (1 - deadZone))
+				/ (1 + deadZone / (1 - deadZone))), 3);
+		if (Robot.oi.joystick.getRawAxis(4) < 0 && 0 < getTwist) {
+			getTwist *= -1;
+		}
+
+		double getX = scale * Robot.oi.joystick.getX();
+		double getY = scale * Robot.oi.joystick.getY();
+		if (Robot.oi.joystick.getPOV() == -1) {
+			time = 0;
+		} else  if (time < 3){
+			if (180 > Robot.oi.joystick.getPOV() && Robot.oi.joystick.getPOV() > 0) {
+				getX = scale;
+			} else if (Robot.oi.joystick.getPOV() == 0 || Robot.oi.joystick.getPOV() == 180) {
+				getX = 0;
+			} else {
+				getX = -scale;
+			}
+			if (270 > Robot.oi.joystick.getPOV() && Robot.oi.joystick.getPOV() > 90) {
+				getY = scale;
+			} else if (Robot.oi.joystick.getPOV() == 90 || Robot.oi.joystick.getPOV() == 270
+					|| Robot.oi.joystick.getPOV() == -1) {
+				getY = 0;
+			} else {
+				getY = -scale;
+			}
+			time++;
+		}
+		Robot.driveTrain.drive.mecanumDrive_Cartesian(getX, getY, getTwist, gyro.getAngle());
+		// Robot.driveTrain.drive.mecanumDrive_Polar(scale,
+		// Robot.oi.joystick.getPOV(), getTwist);
+
+		// Robot.intake.set(Robot.oi.joystick.getRawAxis(2) -
+		// Robot.oi.joystick.getRawAxis(3));
+		// Robot.belt.set((Robot.oi.joystick.getRawAxis(3) -
+		// Robot.oi.joystick.getRawAxis(2)) * 0.6);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

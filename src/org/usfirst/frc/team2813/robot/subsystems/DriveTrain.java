@@ -10,13 +10,15 @@ public class DriveTrain extends Subsystem {
 	// here. Call these from Commands.
 
 	public final RobotDrive drive;
+	public OperatorDrive operatorDrive;
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new OperatorDrive());
+		operatorDrive = new OperatorDrive();
+		setDefaultCommand(operatorDrive);
 	}
-	
+
 	public DriveTrain() {
 		drive = new RobotDrive(0, 1, 2, 3);
 	}

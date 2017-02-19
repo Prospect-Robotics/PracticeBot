@@ -21,54 +21,55 @@ public class Autonomous extends Command {
 
 		ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 		Encoder encoder = new Encoder(0, 0);
-		encoder.setDistancePerPulse(1);
+		encoder.setDistancePerPulse(6 * Math.PI);
 		int position = positionChooser.getSelected() + airshipChooser.getSelected() * 3;
 		switch (position) {
 		case 2:
 			// Drive forward
-			while (encoder.getDistance() < 1)
+			while (encoder.getDistance() < 27.16)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
+			// Drive right
+			encoder.setDistancePerPulse(6 * Math.PI);
+			while (encoder.getDistance() < 0.99)
+				Robot.driveTrain.drive.mecanumDrive_Cartesian(1, 0, 0, gyro.getAngle());
 			// Turn clockwise
-			while (gyro.getAngle() < 1)
+			while (gyro.getAngle() < 30)
 				Robot.driveTrain.drive.mecanumDrive_Polar(0, 0, 1);
 			break;
 
 		case 3:
 			// Drive forward
-			while (encoder.getDistance() < 1)
+			while (encoder.getDistance() < 27.16)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
 			// Drive left
-			while (encoder.getDistance() < 2)
+			encoder.setDistancePerPulse(6 * Math.PI);
+			while (encoder.getDistance() > -32.48)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(-1, 0, 0, gyro.getAngle());
-			// Drive forward
-			while (encoder.getDistance() < 3)
-				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
 			// Turn clockwise
-			while (gyro.getAngle() < 1)
+			while (gyro.getAngle() < 30)
 				Robot.driveTrain.drive.mecanumDrive_Polar(0, 0, 1);
 			break;
 
 		case 4:
 			// Drive forward
-			while (encoder.getDistance() < 1)
+			while (encoder.getDistance() < 27.16)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
 			// Drive left
-			while (encoder.getDistance() < 2)
+			encoder.setDistancePerPulse(6 * Math.PI);
+			while (encoder.getDistance() > -93.62)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(-1, 0, 0, gyro.getAngle());
-			// Drive forward
-			while (encoder.getDistance() < 3)
-				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
 			// Turn clockwise
-			while (gyro.getAngle() < 1)
+			while (gyro.getAngle() < 30)
 				Robot.driveTrain.drive.mecanumDrive_Polar(0, 0, 1);
 			break;
 
 		case 5:
 			// Drive forward
-			while (encoder.getDistance() < 1)
+			while (encoder.getDistance() < 27.16)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
 			// Drive right
-			while (encoder.getDistance() < 2)
+			encoder.setDistancePerPulse(6 * Math.PI);
+			while (encoder.getDistance() < 33.46)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(1, 0, 0, gyro.getAngle());
 			break;
 
@@ -77,49 +78,50 @@ public class Autonomous extends Command {
 
 		case 7:
 			// Drive forward
-			while (encoder.getDistance() < 1)
+			while (encoder.getDistance() < 27.16)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
 			// Drive left
-			while (encoder.getDistance() < 2)
+			encoder.setDistancePerPulse(6 * Math.PI);
+			while (encoder.getDistance() > -61.14)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(-1, 0, 0, gyro.getAngle());
 			break;
 
 		case 8:
 			// Drive forward
-			while (encoder.getDistance() < 1)
+			while (encoder.getDistance() < 27.16)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
 			// Drive right
-			while (encoder.getDistance() < 2)
+			encoder.setDistancePerPulse(6 * Math.PI);
+			while (encoder.getDistance() < 93.62)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(1, 0, 0, gyro.getAngle());
-			// Drive forward
-			while (encoder.getDistance() < 3)
-				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
 			// Turn counterclockwise
-			while (gyro.getAngle() < 1)
+			while (gyro.getAngle() > -30)
 				Robot.driveTrain.drive.mecanumDrive_Polar(0, 0, -1);
 			break;
 
 		case 9:
 			// Drive forward
-			while (encoder.getDistance() < 1)
+			while (encoder.getDistance() < 32.48)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
 			// Drive right
-			while (encoder.getDistance() < 2)
+			encoder.setDistancePerPulse(6 * Math.PI);
+			while (encoder.getDistance() < 61.14)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(1, 0, 0, gyro.getAngle());
-			// Drive forward
-			while (encoder.getDistance() < 3)
-				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
 			// Turn counterclockwise
-			while (gyro.getAngle() < 1)
+			while (gyro.getAngle() > -30)
 				Robot.driveTrain.drive.mecanumDrive_Polar(0, 0, -1);
 			break;
 
 		case 10:
 			// Drive forward
-			while (encoder.getDistance() < 1)
+			while (encoder.getDistance() < 27.16)
 				Robot.driveTrain.drive.mecanumDrive_Cartesian(0, -1, 0, gyro.getAngle());
+			// Drive left
+			encoder.setDistancePerPulse(6 * Math.PI);
+			while (encoder.getDistance() > -28.67)
+				Robot.driveTrain.drive.mecanumDrive_Cartesian(-1, 0, 0, gyro.getAngle());
 			// Turn counterclockwise
-			while (gyro.getAngle() < 1)
+			while (gyro.getAngle() > -30)
 				Robot.driveTrain.drive.mecanumDrive_Polar(0, 0, -1);
 			break;
 		}

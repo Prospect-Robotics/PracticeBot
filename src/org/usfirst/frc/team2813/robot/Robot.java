@@ -2,10 +2,11 @@ package org.usfirst.frc.team2813.robot;
 
 import org.usfirst.frc.team2813.robot.commands.Autonomous;
 import org.usfirst.frc.team2813.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team2813.robot.subsystems.Intake;
+import org.usfirst.frc.team2813.robot.subsystems.MotorSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -22,8 +23,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
-	public static final Intake intake = new Intake();
+	public static MotorSubsystem intake;
+	public static MotorSubsystem belt;
+	public static MotorSubsystem lift;
 	public static OI oi;
+	public static Servo servo;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<Command>();
@@ -33,10 +37,14 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		oi = new OI();
-		chooser.addDefault("Sit there and doing nothing", null);
+		chooser.addDefault("Sit there and do nothing", null);
 		chooser.addObject("Also, do nothing", null);
 		SmartDashboard.putData("Auto mode", chooser);
+		intake = new MotorSubsystem(VictorSP.class, 4, "Intake");
+		belt = new MotorSubsystem(VictorSP.class, 5, "Belt");
+		lift = new MotorSubsystem(VictorSP.class, 6, "Lift");
+		servo = new Servo(7);
+		oi = new OI();
 	}
 
 	/**
@@ -64,7 +72,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		autonomousCommand = chooser.getSelected();
-		
+
 		new Autonomous();
 
 		/*
@@ -75,17 +83,6 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		for (int i = 0; i < oi.joystick.getAxisCount(); i++) {
-			int axistype = oi.joystick.getAxisType(i);
-			String name;
-			try {
-				name = AxisType.values()[axistype].toString();
-			} catch (ArrayIndexOutOfBoundsException e) {
-				name = "INVALID";
-			}
-			// I have no other way to do this
-			System.out.println(String.format("Axis %d is of type %d (%s)\n", i, axistype, name));
-		}
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
